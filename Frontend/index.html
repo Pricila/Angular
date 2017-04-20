@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>AngularJS</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="StyleSheet" href="style.css" type="text/css" > 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+</head>
+<body ng-app="UserManagement" ng-controller="UserController">
+	<div class="container">
+		<div class="page-header" style="margin: 0">
+			<h1>DEMO</h1>
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Register User</h3>
+			</div>
+			<div class="panel-body">
+		<div style="padding-top: 30px">
+			<form class="form-horizontal" ng-submit="addUser(); addEmail()">
+				<fieldset>
+				<legend>Basic Information</legend>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Identification</label>
+					<div class="col-md-4"> <input type="text" class="form-control" name="id" ng-model="id" required></div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">First Name</label>
+					<div class="col-md-4"> <input type="text" class="form-control" name="firstName" ng-model="firstName" required></div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Last Name</label>
+					<div class="col-md-4"> <input type="text" class="form-control" name="lastName" ng-model="lastName" required></div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Gender</label>
+					<div class="col-md-4"> <select class="form-control" name="gender" ng-model="gender">
+						<option selected>-Select-</option>
+						<option value="Female">Female</option>
+						<option value="Male">Male</option>
+					  </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Date of Birth</label>
+					<div class="col-md-4"> <input type="date" class="form-control" name="dateOfBirth" ng-model="dateOfBirth" required></div>
+				</div>
+				</fieldset>
+				<fieldset>
+				<legend>Address</legend>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Country</label>
+					<div class="col-md-4"> <select class="form-control" ng-model="country" ng-change="fillCombo()" required>
+						<option value="" selected>-Select-</option>
+			     		<option ng-repeat="t in types">{{t}}</option>
+					  </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">City</label>
+					<div class="col-md-4"> <select class="form-control" ng-model="city">
+						<option ng-repeat="s in things">{{s}}</option>
+					  </select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Postal Code</label>
+					<div class="col-md-4"> <input type="text" class="form-control" name="postalCode" ng-model="postalCode"></div>
+				</div>
+				</fieldset>
+				<fieldset>
+				<legend>Email</legend>
+				<div class="form-group">
+					<label class="col-md-4 control-label">Email</label>
+					<div class="col-md-4"><input type="email" class="form-control" name="email" ng-model="email" required></div>
+					<div class="col-md-6"><input type="hidden" class="hidden" name="hidden" ></div>
+					<div class="col-md-4"><input type="hidden" class="hidden" name="hidden" ></div>
+					<div class="col-md-4"><input type="hidden" class="hidden" name="hidden" ></div>
+					<div class="col-md-2"><input type="radio" class="form-check-input" ng-model="emailType" id="personal" value="Personal" >
+					<label class="control-label">Personal</label></div>
+
+					<div class="col-md-2" ><input type="radio" class="form-check-input" ng-model="emailType" id="corporative" 
+					ng-value="Corporative">
+					<label class="control-label">Corporative</label></div>
+				</div>
+				</fieldset>
+				<div class="col-md-12 col-center">
+					<input type="submit" class="btn btn-primary btn-sm" value="Submit" />					
+				</div>
+			</form>
+			<label class="control-label">{{formResult}}</label>
+		</div>
+		</div>
+		</div>
+		</br>
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title">Search User by Identification</h3>
+			</div>
+			<div class="panel-body">
+				<div class="col-md-3"><input type="text" class="form-control" name="user" ng-model="user" placeholder="Type your Identification"></div>
+				<button type="button" ng-click="searchUser(user)" class="btn btn-primary btn-sm">Search User</button>
+				</br> 
+				</br>
+				<label class="control-label">{{message}}</label>
+				<div ng-show="showTable">
+					<fieldset>
+					<legend>Basic Information</legend>
+						<div class="form-group"><label class="control-label">Identification: </label>
+						<label class="text-primary">{{users.IDENTIFICATION}}</label></div>
+
+						<div class="form-group"><label class="control-label">First Name: </label>
+						<label class="text-primary">{{users.FIRST_NAME}}</label></div>
+
+						<div class="form-group"><label class="control-label">Last Name: </label>
+						<label class="text-primary">{{users.LAST_NAME}}</label></div>
+
+						<div class="form-group"><label class="control-label">Gender: </label>
+						<label class="text-primary">{{users.GENDER}}</label></div>
+
+						<div class="form-group"><label class="control-label">Date of Birth: </label>
+						<label class="text-primary">{{users.DATE_OF_BIRTH}}</label></div>
+					</fieldset>
+					<fieldset>
+					<legend>Address</legend>
+						<div class="form-group"><label class="control-label">Address: </label>
+						<label class="text-primary">{{users.ADDRESS.ADDRESS}}</label></div>
+
+						<div class="form-group"><label class="control-label">Address City: </label>
+						<label class="text-primary">{{users.ADDRESS.ADDRESS_CITY}}</label></div>
+
+						<div class="form-group"><label class="control-label">Postal Code: </label>
+						<label class="text-primary">{{users.ADDRESS.POSTAL_CODE}}</label></div>
+					</fieldset>
+					<fieldset>
+					<legend>Email</legend>
+						<div ng-repeat="x in email"><div ng-repeat="x1 in x">
+					        <div class="form-group"><label class="control-label">Email: </label>
+							<label class="text-primary">{{x1.EMAIL}}</label>
+							<label class="control-label">Type: </label>
+							<label class="text-primary">{{x1.EMAIL_TYPE}}</label></div>
+					    </div>
+					<fieldset>
+				</div>
+			</div>
+		</div>		
+	</div>
+</body>
+</html>	
